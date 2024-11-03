@@ -4,24 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sélection des équipes</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        #container {
-            text-align: center;
-            margin-top: 50px;
-        }
-        select {
-            width: 200px;
-            margin: 20px;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-    </style>
+    <link rel="stylesheet" href="style-selection.css">
 </head>
 <body>
     <div id="container">
@@ -36,63 +19,9 @@
             <option value="">-- Sélectionner une équipe --</option>
         </select>
 
-        <button onclick="goToNextPage()">Suivant</button>
+        <button id="nextPage" onclick="goToNextPage()">Suivant</button>
     </div>
 
-    <script>
-        const teamsData = {
-            "teams": [
-              {
-                "name": "Équipe A",
-                "players": [
-                  "Joueur A1", "Joueur A2", "Joueur A3", 
-                  "Joueur A4", "Joueur A5", "Joueur A6"
-                ]
-              },
-              {
-                "name": "Équipe B",
-                "players": [
-                  "Joueur B1", "Joueur B2", "Joueur B3", 
-                  "Joueur B4", "Joueur B5", "Joueur B6"
-                ]
-              }
-            ]
-        };
-
-        window.onload = function() {
-            const homeTeamSelect = document.getElementById('homeTeam');
-            const awayTeamSelect = document.getElementById('awayTeam');
-            
-            teamsData.teams.forEach(team => {
-                let option = new Option(team.name, team.name);
-                homeTeamSelect.add(option);
-            });
-        };
-
-        function updateVisitorOptions() {
-            const homeTeamSelect = document.getElementById('homeTeam');
-            const awayTeamSelect = document.getElementById('awayTeam');
-            awayTeamSelect.innerHTML = '<option value="">-- Sélectionner une équipe --</option>';
-
-            teamsData.teams.forEach(team => {
-                if (team.name !== homeTeamSelect.value) {
-                    let option = new Option(team.name, team.name);
-                    awayTeamSelect.add(option);
-                }
-            });
-        }
-
-        function goToNextPage() {
-            const homeTeam = document.getElementById('homeTeam').value;
-            const awayTeam = document.getElementById('awayTeam').value;
-
-            if (!homeTeam || !awayTeam) {
-                alert("Veuillez sélectionner deux équipes différentes.");
-                return;
-            }
-
-            window.location.href = `terrain.html?homeTeam=${homeTeam}&awayTeam=${awayTeam}`;
-        }
-    </script>
+    <script src="selection.js"></script>
 </body>
 </html>

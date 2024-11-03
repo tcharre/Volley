@@ -1,0 +1,92 @@
+:root {
+  font-family: Arial, sans-serif;
+
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  overflow: hidden;
+}
+
+#container {
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+#left, #right {
+  width: 20%;
+  overflow-y: auto;
+}
+
+#court-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 100vh;
+  position: relative;
+}
+
+#court {
+  width: 100%;
+  height: 100%;
+  background: url('assets/volleyball_cours.png') no-repeat center;
+  background-size: contain;
+  transform: rotate(90deg);
+  transform-origin: center center;
+  position: relative;
+}
+
+.dropzone {
+  width: 40px;
+  height: 40px;
+  border: 2px dashed #ccc;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  transform: rotate(-90deg);
+  justify-content: center;
+  align-items: center;
+}
+
+.player {
+  display: inline-block;
+  margin: 0;
+  cursor: pointer;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  text-align: center;
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.substitutes-label {
+  position: absolute;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  color: #333;
+}
+
+#substitutes-home {
+  top: 90%;
+  left: -21%;
+  transform: rotate(-90deg);
+}
+
+#substitutes-away {
+  top: 7%;
+  left: -21%;
+  transform: rotate(-90deg);
+}
