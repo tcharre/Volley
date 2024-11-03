@@ -1,9 +1,14 @@
-// vite.config.js
 import { defineConfig } from 'vite';
+// import mpa from 'vite-plugin-multi-pages';
 
 export default defineConfig({
   build: {
-    outDir: 'dist',  // Dossier de sortie pour les fichiers compilés
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        terrain: 'terrain.html',
+      },
+    },
+    outDir: 'dist',
   },
-  // Ajoutez d'autres configurations si nécessaire
 });
