@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terrain de Volley</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden; /* Éviter le défilement */
+        }
+        #container {
+            display: flex;
+            justify-content: space-between;
+            height: 100vh; /* Remplir toute la hauteur de l'écran */
+        }
+        #left, #right {
+            width: 20%;
+            overflow-y: auto; /* Permettre le défilement si nécessaire */
+        }
+        #court-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60%;
+            height: 100vh;
+            position: relative;
+        }
+        #court {
+            width: 100%;
+            height: 100%;
+            background: url('assets/volleyball_cours.png') no-repeat center;
+            background-size: contain; /* Maintenir le ratio d'aspect de l'image */
+            transform: rotate(90deg); /* Rotation du terrain uniquement */
+            transform-origin: center center;
+            position: relative;
+        }
+        .dropzone {
+            width: 40px; /* Taille ajustée des dropzones */
+            height: 40px;
+            border: 2px dashed #ccc;
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.5);
+            display: flex;
+            justify-content: center; /* Centre horizontalement */
+            align-items: center; /* Centre verticalement */
+        }
+        .player {
+            display: inline-block;
+            margin: 0;
+            cursor: pointer;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            text-align: center;
+            transition: background-color 0.2s;
+            position: relative; /* Position relative pour maintenir le positionnement */
+        }
+        .dragging {
+            opacity: 0.5;
+        }
+        .substitutes-label {
+            position: absolute;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            color: #333;
+        }
+        #substitutes-home {
+            top: 90%; /* Positionner l'étiquette au-dessus des remplaçants à gauche */
+            left: -21%;
+            transform: rotate(-90deg);
+        }
+        #substitutes-away {
+            top: 7%; /* Positionner l'étiquette au-dessus des remplaçants à droite */
+            left: -21%;
+            transform: rotate(-90deg);
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="left">
+        <h2 id="homeTeamTitle"></h2>
+        <div id="homePlayers"></div>
+    </div>
+
+    <div id="court-container">
+        <div id="court">
+            <!-- Dropzones pour l'équipe à domicile (gauche) -->
+            <div class="dropzone" id="zone1" style="top: 70%; left: 38%;"></div>
+            <div class="dropzone" id="zone2" style="top: 78%; left: 48%;"></div>
+            <div class="dropzone" id="zone3" style="top: 70%; left: 58%;"></div>
+            <div class="dropzone" id="zone4" style="top: 52.5%; left: 38%;"></div>
+            <div class="dropzone" id="zone5" style="top: 52.5%; left: 48%;"></div>
+            <div class="dropzone" id="zone6" style="top: 52.5%; left: 58%;"></div>
+
+            <!-- Dropzones pour l'équipe visiteuse (droite) -->
+            <div class="dropzone" id="zone7" style="top: 41%; left: 38%;"></div>
+            <div class="dropzone" id="zone8" style="top: 41%; left: 48%;"></div>
+            <div class="dropzone" id="zone9" style="top: 41%; left: 58%;"></div>
+            <div class="dropzone" id="zone10" style="top: 22%; left: 38%;"></div>
+            <div class="dropzone" id="zone11" style="top: 16%; left: 48%;"></div>
+            <div class="dropzone" id="zone12" style="top: 22%; left: 58%;"></div>
+
+            <!-- Label pour les remplaçants de l'équipe domicile (gauche) -->
+            <div class="substitutes-label" id="substitutes-home">Remplaçants</div>
+
+            <!-- Dropzones pour les remplaçants de l'équipe domicile (gauche) -->
+            <div class="dropzone" id="zone13" style="top: 90%; left: 30%;"></div>
+            <div class="dropzone" id="zone14" style="top: 90%; left: 37%;"></div>
+            <div class="dropzone" id="zone15" style="top: 90%; left: 44%;"></div>
+            <div class="dropzone" id="zone16" style="top: 90%; left: 51%;"></div>
+            <div class="dropzone" id="zone17" style="top: 90%; left: 58%;"></div>
+            <div class="dropzone" id="zone18" style="top: 90%; left: 65%;"></div>
+
+            <!-- Label pour les remplaçants de l'équipe visiteuse (droite) -->
+            <div class="substitutes-label" id="substitutes-away">Remplaçants</div>
+
+            <!-- Dropzones pour les remplaçants de l'équipe visiteuse (droite) -->
+            <div class="dropzone" id="zone19" style="top: 4%; left: 30%;"></div>
+            <div class="dropzone" id="zone20" style="top: 4%; left: 37%;"></div>
+            <div class="dropzone" id="zone21" style="top: 4%; left: 44%;"></div>
+            <div class="dropzone" id="zone22" style="top: 4%; left: 51%;"></div>
+            <div class="dropzone" id="zone23" style="top: 4%; left: 58%;"></div>
+            <div class="dropzone" id="zone24" style="top: 4%; left: 65%;"></div>
+        </div>
+    </div>
+
+    <div id="right">
+        <h2 id="awayTeamTitle"></h2>
+        <div id="awayPlayers"></div>
+    </div>
+</div>
+
+<script>
+    let teamsData = {
+        "teams": [
+            {
+                "name": "Équipe A",
+                "players": [
+                  "Théo", "Julien", "Nathan", 
+                  "Léo", "Mattis", "Nico"
+                ]
+            },
+            {
+                "name": "Équipe B",
+                "players": [
+                  "Noémie", "Raphaelle", "François", 
+                  "Alain", "Raphael", "Thomas"
+                ]
+            }
+        ]
+    };
+
+    // Fonction pour afficher les joueurs
+    function displayPlayers(players, containerId) {
+        const container = document.getElementById(containerId);
+        players.forEach(player => {
+            let playerDiv = document.createElement('div');
+            playerDiv.className = 'player';
+            playerDiv.innerText = player;
+            playerDiv.draggable = true; // Rendre les joueurs déplaçables
+            playerDiv.id = player; // Ajouter un ID basé sur le nom du joueur
+
+            // Ajout des événements Drag
+            playerDiv.addEventListener('dragstart', handleDragStart);
+            playerDiv.addEventListener('dragend', handleDragEnd);
+
+            container.appendChild(playerDiv);
+        });
+    }
+
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const homeTeam = urlParams.get('homeTeam');
+        const awayTeam = urlParams.get('awayTeam');
+        
+        document.getElementById('homeTeamTitle').innerText = homeTeam;
+        document.getElementById('awayTeamTitle').innerText = awayTeam;
+
+        const homePlayers = teamsData.teams.find(team => team.name === homeTeam).players;
+        const awayPlayers = teamsData.teams.find(team => team.name === awayTeam).players;
+
+        displayPlayers(homePlayers, 'homePlayers');
+        displayPlayers(awayPlayers, 'awayPlayers');
+
+        setDropzones(); // Activer les dropzones
+    };
+
+    // Gestion du drag and drop
+    function handleDragStart(e) {
+        e.target.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', e.target.id);
+    }
+
+    function handleDragEnd(e) {
+        e.target.classList.remove('dragging');
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        const data = e.dataTransfer.getData('text/plain');
+        const player = document.getElementById(data);
+        
+        // Obtenez les dimensions de la dropzone
+        const dropzone = e.target;
+        const dropzoneRect = dropzone.getBoundingClientRect();
+        
+        // Obtenez les dimensions de l'étiquette du joueur
+        const playerRect = player.getBoundingClientRect();
+
+        // Calculer la position pour centrer l'étiquette
+        const offsetX = (dropzoneRect.width - playerRect.width) / 2;
+        const offsetY = (dropzoneRect.height - playerRect.height) / 2;
+
+        // Positionner le joueur dans la dropzone
+        dropzone.appendChild(player);
+        
+        // Appliquer le style de positionnement pour centrer l'étiquette
+        player.style.position = 'absolute';
+        player.style.left = `${offsetX}px`; // Centrer horizontalement
+        player.style.top = `${offsetY}px`;  // Centrer verticalement
+        player.style.transform = 'rotate(-90deg)'; // Assurer que l'étiquette reste horizontale
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+    }
+
+    // Activation des dropzones pour chaque équipe
+    function setDropzones() {
+        const homeDropzones = ['zone1', 'zone2', 'zone3', 'zone4', 'zone5', 'zone6', 'zone13', 'zone14', 'zone15', 'zone16', 'zone17', 'zone18'];
+        const awayDropzones = ['zone7', 'zone8', 'zone9', 'zone10', 'zone11', 'zone12', 'zone19', 'zone20', 'zone21', 'zone22', 'zone23', 'zone24'];
+
+        homeDropzones.forEach(zoneId => {
+            const zone = document.getElementById(zoneId);
+            zone.addEventListener('drop', handleDrop);
+            zone.addEventListener('dragover', handleDragOver);
+        });
+
+        awayDropzones.forEach(zoneId => {
+            const zone = document.getElementById(zoneId);
+            zone.addEventListener('drop', handleDrop);
+            zone.addEventListener('dragover', handleDragOver);
+        });
+    }
+</script>
+
+</body>
+</html>
