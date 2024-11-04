@@ -57,25 +57,106 @@ body {
 }
 
 .dropzone {
-  width: 40px;
-  height: 40px;
-  border: 2px dashed #ccc;
+  width: 60px;
+  height: 60px;
+  border: 2px solid white;
+  border-radius: 50%;
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.3);
   display: flex;
-  transform: rotate(-90deg);
+  /* transform: rotate(-0deg); */
   justify-content: center;
   align-items: center;
+  transition: background-color 0.3s;
+}
+
+.dropzone:hover {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .player {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px;
+  cursor: grab;
+  padding: 5px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s, background-color 0.2s;
+  width: 80px;
+  user-select: none;
+}
+
+.player img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 5px;
+  pointer-events: none;
+}
+
+.player div {
+  pointer-events: none;
+}
+
+.player:hover {
+  transform: scale(1.05);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.player.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+  cursor: grabbing;
+}
+
+/* Style pour un joueur dans une dropzone */
+.dropzone .player {
+  transform: rotate(-90deg);
   margin: 0;
-  cursor: pointer;
-  padding: 5px 10px;
-  text-align: center;
-  transition: background-color 0.2s;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: none;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dropzone .player img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  transform: none;
+}
+
+.dropzone .player div {
+  position: absolute;
+  top: 85%;
+  width: max-content;
+  margin-top: 5px;
+  padding: 2px 8px;
+  font-size: 16px;
+  color: #00008B;
+  background: none;
+  text-align: center;
+  font-weight: bold;
+  white-space: nowrap;
+  text-shadow: 
+    -2px -2px 0 white,
+    2px -2px 0 white,
+    -2px 2px 0 white,
+    2px 2px 0 white,
+    0 -2px 0 white,
+    0 2px 0 white,
+    -2px 0 0 white,
+    2px 0 0 white;
 }
 
 .substitutes-label {
@@ -97,4 +178,8 @@ body {
   top: 7%;
   left: -21%;
   transform: rotate(-90deg);
+}
+
+#dropzone_list .dropzone .player div {
+  transform: none;
 }

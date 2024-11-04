@@ -28,8 +28,8 @@ let teamsData = {
                   "image": "/assets/player/mattieu.png"
               },
               {
-                "name": "Mattieu",
-                "image": "/assets/player/theo.png"
+                "name": "Guim",
+                "image": "/assets/player/guim.png"
               }
           ]
       },
@@ -61,37 +61,40 @@ let teamsData = {
               "image": "/assets/player/mattieu.png"
           },
           {
-            "name": "Mattieu",
-            "image": "/assets/player/theo.png"
+              "name": "Guim",
+              "image": "/assets/player/guim.png"
           }
           ]
       }
   ]
 };
 
+let draggedPlayer = null;
+let playerPositions = new Map(); // Pour stocker les positions des joueurs
+
 function displayPlayers(players, containerId) {
   const container = document.getElementById(containerId);
   players.forEach(player => {
       let playerDiv = document.createElement('div');
-      playerDiv.className = 'player';
+      playerDiv.className = 'player ' + 
+          (containerId === 'homePlayers' ? 'home-player' : 'away-player');
+      playerDiv.id = player.name;
       
-      // Créer et ajouter l'image
       let playerImg = document.createElement('img');
       playerImg.src = player.image;
       playerImg.alt = player.name;
+      playerImg.draggable = false;
       playerDiv.appendChild(playerImg);
       
-      // Ajouter le nom du joueur
       let playerName = document.createElement('div');
       playerName.innerText = player.name;
+      playerName.draggable = false;
       playerDiv.appendChild(playerName);
       
       playerDiv.draggable = true;
-      playerDiv.id = player.name;
-
       playerDiv.addEventListener('dragstart', handleDragStart);
       playerDiv.addEventListener('dragend', handleDragEnd);
-
+      
       container.appendChild(playerDiv);
   });
 }
@@ -119,25 +122,97 @@ window.onload = function() {
 };
 
 function handleDragStart(e) {
-  e.target.classList.add('dragging');
-  e.dataTransfer.setData('text/plain', e.target.id);
+    draggedPlayer = e.target.closest('.player');
+    if (!draggedPlayer) return;
+    
+    draggedPlayer.classList.add('dragging');
+    e.dataTransfer.setData('text/plain', draggedPlayer.id);
 }
 
 function handleDragEnd(e) {
-  e.target.classList.remove('dragging');
+    e.target.classList.remove('dragging');
+    draggedPlayer = null;
 }
 
 function handleDragOver(e) {
-  e.preventDefault(); // Necessary to allow dropping
-  e.dataTransfer.dropEffect = 'move';
+    e.preventDefault();
 }
 
 function handleDrop(e) {
-  e.preventDefault();
-  const playerId = e.dataTransfer.getData('text/plain');
-  const player = document.getElementById(playerId);
+    e.preventDefault();
+    const dropzone = e.target.closest('.dropzone');
+    if (!dropzone || !draggedPlayer) return;
 
-  if (player) {
-    e.target.appendChild(player); // Move player to the dropzone
-  }
+    // Vérifier si la dropzone contient déjà un joueur
+    const existingPlayer = dropzone.querySelector('.player');
+    
+    if (existingPlayer) {
+        // Si le joueur déplacé vient d'une dropzone
+        const originalDropzone = draggedPlayer.parentElement;
+        if (originalDropzone.classList.contains('dropzone')) {
+            // Échanger les deux joueurs
+            originalDropzone.appendChild(existingPlayer);
+            dropzone.appendChild(draggedPlayer);
+            
+            // Mettre à jour les positions dans la Map
+            playerPositions.set(existingPlayer.id, originalDropzone.id);
+            playerPositions.set(draggedPlayer.id, dropzone.id);
+        } else {
+            // Si le joueur vient de la liste des joueurs, simplement le placer dans la dropzone
+            // et remettre l'ancien joueur dans sa liste d'origine
+            const playerList = existingPlayer.classList.contains('home-player') 
+                ? document.getElementById('homePlayers')
+                : document.getElementById('awayPlayers');
+            
+            playerList.appendChild(existingPlayer);
+            dropzone.appendChild(draggedPlayer);
+            playerPositions.set(draggedPlayer.id, dropzone.id);
+            playerPositions.delete(existingPlayer.id);
+        }
+    } else {
+        // Si la dropzone est vide, simplement placer le joueur
+        dropzone.appendChild(draggedPlayer);
+        playerPositions.set(draggedPlayer.id, dropzone.id);
+    }
+
+    // Sauvegarder les positions
+    savePositions();
 }
+
+function savePositions() {
+    const positions = Object.fromEntries(playerPositions);
+    localStorage.setItem('playerPositions', JSON.stringify(positions));
+}
+
+function loadPositions() {
+    const savedPositions = localStorage.getItem('playerPositions');
+    if (savedPositions) {
+        const positions = JSON.parse(savedPositions);
+        Object.entries(positions).forEach(([playerId, zoneId]) => {
+            const player = document.getElementById(playerId);
+            const dropzone = document.getElementById(zoneId);
+            if (player && dropzone) {
+                dropzone.appendChild(player);
+                playerPositions.set(playerId, zoneId);
+            }
+        });
+    }
+}
+
+// Fonction d'initialisation
+function initializeDragAndDrop() {
+    // Ajouter les event listeners aux dropzones
+    document.querySelectorAll('.dropzone').forEach(dropzone => {
+        dropzone.addEventListener('dragover', handleDragOver);
+        dropzone.addEventListener('drop', handleDrop);
+    });
+
+    // Charger les positions sauvegardées
+    loadPositions();
+}
+
+// Appeler l'initialisation une fois que le DOM est chargé
+document.addEventListener('DOMContentLoaded', () => {
+    // Votre code d'initialisation existant...
+    initializeDragAndDrop();
+});
