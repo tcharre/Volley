@@ -61,14 +61,13 @@ body {
 }
 
 .dropzone {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border: 2px solid white;
   border-radius: 50%;
   position: absolute;
   background-color: rgba(255, 255, 255, 0.3);
   display: flex;
-  /* transform: rotate(-0deg); */
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s;
@@ -88,13 +87,13 @@ body {
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.1);
   transition: transform 0.2s, background-color 0.2s;
-  width: 80px;
+  width: 100px;
   user-select: none;
 }
 
 .player img {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 5px;
@@ -104,7 +103,7 @@ body {
 .player div {
   width: max-content;
   padding: 2px 8px;
-  font-size: 16px;
+  font-size: 18px;
   color: #00008B;
   background: none;
   text-align: center;
@@ -159,8 +158,8 @@ body {
 
 .dropzone .player div {
   position: absolute;
-  top: 85%;
-  margin-top: 5px;
+  top: 90%;
+  font-size: 18px;
 }
 
 .substitutes-label {
@@ -197,8 +196,8 @@ body {
 /* Ajustement de la taille des images pour les joueurs dans la liste */
 #left .player img,
 #right .player img {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   border: 2px solid white;
 }
