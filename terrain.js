@@ -29,7 +29,7 @@ let teamsData = {
               },
               {
                 "name": "Guim",
-                "image": "/guim.png"
+                "image": "/Guim.png"
               }
           ]
       },
@@ -62,7 +62,7 @@ let teamsData = {
           },
           {
               "name": "Guim",
-              "image": "/guim.png"
+              "image": "/Guim.png"
           }
           ]
       }
