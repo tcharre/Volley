@@ -10,8 +10,12 @@
 body {
   background: url('assets/background.png');
   font-family: Arial, sans-serif;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   margin: 0;
   overflow: hidden;
+  height: 100vh;
 }
 
 #container {
@@ -71,7 +75,7 @@ body {
 }
 
 .dropzone:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.5) !important;
 }
 
 .player {
@@ -234,4 +238,24 @@ body {
 #validateButton:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+}
+
+/* Dropzones de gauche (zones 1-6) - Bleu */
+#zone1, #zone2, #zone3, #zone4, #zone5, #zone6 {
+    background-color: rgba(0, 0, 255, 0.2); /* Bleu transparent */
+}
+
+/* Dropzones de droite (zones 7-12) - Rouge */
+#zone7, #zone8, #zone9, #zone10, #zone11, #zone12 {
+    background-color: rgba(255, 0, 0, 0.2); /* Rouge transparent */
+}
+
+/* Zones de remplaçants équipe bleue */
+#zone13, #zone14, #zone15, #zone16, #zone17, #zone18 {
+    background-color: rgba(0, 0, 255, 0.2);
+}
+
+/* Zones de remplaçants équipe rouge */
+#zone19, #zone20, #zone21, #zone22, #zone23, #zone24 {
+    background-color: rgba(255, 0, 0, 0.2);
 }
