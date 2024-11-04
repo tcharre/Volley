@@ -1,7 +1,6 @@
 :root {
   font-family: Arial, sans-serif;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #87CEEB;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -9,6 +8,7 @@
 }
 
 body {
+  background: url('assets/background.png');
   font-family: Arial, sans-serif;
   margin: 0;
   overflow: hidden;
@@ -98,7 +98,24 @@ body {
 }
 
 .player div {
+  width: max-content;
+  padding: 2px 8px;
+  font-size: 16px;
+  color: #00008B;
+  background: none;
+  text-align: center;
+  font-weight: bold;
+  white-space: nowrap;
   pointer-events: none;
+  text-shadow: 
+    -2px -2px 0 white,
+    2px -2px 0 white,
+    -2px 2px 0 white,
+    2px 2px 0 white,
+    0 -2px 0 white,
+    0 2px 0 white,
+    -2px 0 0 white,
+    2px 0 0 white;
 }
 
 .player:hover {
@@ -139,24 +156,7 @@ body {
 .dropzone .player div {
   position: absolute;
   top: 85%;
-  width: max-content;
   margin-top: 5px;
-  padding: 2px 8px;
-  font-size: 16px;
-  color: #00008B;
-  background: none;
-  text-align: center;
-  font-weight: bold;
-  white-space: nowrap;
-  text-shadow: 
-    -2px -2px 0 white,
-    2px -2px 0 white,
-    -2px 2px 0 white,
-    2px 2px 0 white,
-    0 -2px 0 white,
-    0 2px 0 white,
-    -2px 0 0 white,
-    2px 0 0 white;
 }
 
 .substitutes-label {
@@ -182,4 +182,56 @@ body {
 
 #dropzone_list .dropzone .player div {
   transform: none;
+}
+
+/* Style pour les joueurs dans la liste */
+#left .player div,
+#right .player div {
+  margin-top: 5px;
+}
+
+/* Ajustement de la taille des images pour les joueurs dans la liste */
+#left .player img,
+#right .player img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+#validation-container {
+    position: fixed;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+#validateButton {
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #FFA500;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 200px;
+}
+
+#validateButton:hover {
+    background-color: #e69500;
+}
+
+#validateButton:active {
+    transform: scale(0.98);
+}
+
+#validateButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
 }
