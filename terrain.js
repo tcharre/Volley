@@ -2,11 +2,69 @@ let teamsData = {
   "teams": [
       {
           "name": "Équipe A",
-          "players": ["Théo", "Julien", "Nathan", "Léo", "Mattis", "Nico"]
+          "players": [
+              {
+                  "name": "Théo",
+                  "image": "/assets/player/theo.png"
+              },
+              {
+                  "name": "Lillian",
+                  "image": "/assets/player/lillian.png"
+              },
+              {
+                  "name": "Arthur",
+                  "image": "/assets/player/arthur.png"
+              },
+              {
+                  "name": "Benjamin",
+                  "image": "/assets/player/benjamin.png"
+              },
+              {
+                  "name": "Micka",
+                  "image": "/assets/player/micka.png"
+              },
+              {
+                  "name": "Mattieu",
+                  "image": "/assets/player/mattieu.png"
+              },
+              {
+                "name": "Mattieu",
+                "image": "/assets/player/theo.png"
+              }
+          ]
       },
       {
           "name": "Équipe B",
-          "players": ["Noémie", "Raphaelle", "François", "Alain", "Raphael", "Thomas"]
+          "players": [
+            {
+              "name": "Théo",
+              "image": "/assets/player/theo.png"
+          },
+          {
+              "name": "Lillian",
+              "image": "/assets/player/lillian.png"
+          },
+          {
+              "name": "Arthur",
+              "image": "/assets/player/arthur.png"
+          },
+          {
+              "name": "Benjamin",
+              "image": "/assets/player/benjamin.png"
+          },
+          {
+              "name": "Micka",
+              "image": "/assets/player/micka.png"
+          },
+          {
+              "name": "Mattieu",
+              "image": "/assets/player/mattieu.png"
+          },
+          {
+            "name": "Mattieu",
+            "image": "/assets/player/theo.png"
+          }
+          ]
       }
   ]
 };
@@ -16,9 +74,20 @@ function displayPlayers(players, containerId) {
   players.forEach(player => {
       let playerDiv = document.createElement('div');
       playerDiv.className = 'player';
-      playerDiv.innerText = player;
+      
+      // Créer et ajouter l'image
+      let playerImg = document.createElement('img');
+      playerImg.src = player.image;
+      playerImg.alt = player.name;
+      playerDiv.appendChild(playerImg);
+      
+      // Ajouter le nom du joueur
+      let playerName = document.createElement('div');
+      playerName.innerText = player.name;
+      playerDiv.appendChild(playerName);
+      
       playerDiv.draggable = true;
-      playerDiv.id = player;
+      playerDiv.id = player.name;
 
       playerDiv.addEventListener('dragstart', handleDragStart);
       playerDiv.addEventListener('dragend', handleDragEnd);

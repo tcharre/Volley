@@ -2,7 +2,7 @@
   font-family: Arial, sans-serif;
 
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #87CEEB;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -16,7 +16,7 @@ body {
 
 #container {
   text-align: center;
-  margin-top: 50px;
+  margin-top: 100px;
 }
 
 select {
@@ -28,4 +28,42 @@ button {
   margin-top: 20px;
   padding: 10px 20px;
   font-size: 16px;
+}
+
+h1{
+  font-size: 48px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 2px 2px #000;
+  margin-bottom:20px;
+}
+
+select{
+  width: 300px;
+  margin: 20px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  text-align: center;
+  background-color: #FFF;
+  color: #333;
+}
+
+button {
+  display: block;  /* S'assure que le bouton est en mode bloc */
+  margin: 50px auto 0;  /* Centre le bouton horizontalement et espace au-dessus */
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  background-color: #FFA500; 
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #e69500; /* Change la couleur au survol */
 }
