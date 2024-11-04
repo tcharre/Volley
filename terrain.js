@@ -5,31 +5,31 @@ let teamsData = {
           "players": [
               {
                   "name": "Théo",
-                  "image": "/public/player/theo.png"
+                  "image": "/player/theo.png"
               },
               {
                   "name": "Lillian",
-                  "image": "/public/player/lillian.png"
+                  "image": "/player/lillian.png"
               },
               {
                   "name": "Arthur",
-                  "image": "/public/player/arthur.png"
+                  "image": "/player/arthur.png"
               },
               {
                   "name": "Benjamin",
-                  "image": "/public/player/benjamin.png"
+                  "image": "/player/benjamin.png"
               },
               {
                   "name": "Micka",
-                  "image": "/public/player/micka.png"
+                  "image": "/player/micka.png"
               },
               {
                   "name": "Mattieu",
-                  "image": "/public/player/mattieu.png"
+                  "image": "/player/mattieu.png"
               },
               {
                 "name": "Guim",
-                "image": "/public/player/guim.png"
+                "image": "/player/guim.png"
               }
           ]
       },
@@ -38,31 +38,31 @@ let teamsData = {
           "players": [
             {
               "name": "Théo",
-              "image": "/public/player/theo.png"
+              "image": "/player/theo.png"
           },
           {
               "name": "Lillian",
-              "image": "/public/player/lillian.png"
+              "image": "/player/lillian.png"
           },
           {
               "name": "Arthur",
-              "image": "/public/player/arthur.png"
+              "image": "/player/arthur.png"
           },
           {
               "name": "Benjamin",
-              "image": "/public/player/benjamin.png"
+              "image": "/player/benjamin.png"
           },
           {
               "name": "Micka",
-              "image": "/public/player/micka.png"
+              "image": "/player/micka.png"
           },
           {
               "name": "Mattieu",
-              "image": "/public/player/mattieu.png"
+              "image": "/player/mattieu.png"
           },
           {
               "name": "Guim",
-              "image": "/public/player/guim.png"
+              "image": "/player/guim.png"
           }
           ]
       }
